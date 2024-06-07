@@ -1,7 +1,9 @@
 package com.arpan.spring_api_neo4j.controllers;
 
 import com.arpan.spring_api_neo4j.models.Course;
+import com.arpan.spring_api_neo4j.objects.CourseDTO;
 import com.arpan.spring_api_neo4j.services.CourseService;
+import com.arpan.spring_api_neo4j.services.LessonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +15,11 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
+    private final LessonService lessonService;
 
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, LessonService lessonService) {
         this.courseService = courseService;
+        this.lessonService = lessonService;
     }
 
     @GetMapping("/")
@@ -24,10 +28,14 @@ public class CourseController {
     }
 
     @GetMapping("/{identifier}")
-    public ResponseEntity<Course> courseDetails(@PathVariable("identifier") String identifier){
+    public ResponseEntity<CourseDTO> courseDetails(@PathVariable("identifier") String identifier){
         Course course = courseService.getCourseByIdentifier(identifier);
 
-        return new ResponseEntity<>(course,HttpStatus.OK);
+        CourseDTO responseCourse = new CourseDTO(course.getIdentifier(),course.getTitle(),course.getTeacher());
+
+        responseCourse.setLessons(lessonService.getAllLessonsByCourseIdentifier(responseCourse.getIdentifier()));
+
+        return new ResponseEntity<>(responseCourse,HttpStatus.OK);
     }
 
 

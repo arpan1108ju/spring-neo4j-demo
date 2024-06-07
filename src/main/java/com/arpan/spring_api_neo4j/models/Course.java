@@ -3,10 +3,6 @@ package com.arpan.spring_api_neo4j.models;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Node
@@ -21,9 +17,6 @@ public class Course {
     private String title;
 
     private String teacher;
-
-    @Relationship(type = "BELONGS_TO",direction = Relationship.Direction.INCOMING)
-    private List<Lesson> lessons = new ArrayList<>();
 
 
     public Course() {
@@ -53,7 +46,4 @@ public class Course {
         this.teacher = teacher;
     }
 
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
 }
