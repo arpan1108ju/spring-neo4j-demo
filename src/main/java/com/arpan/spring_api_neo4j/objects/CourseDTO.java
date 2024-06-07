@@ -15,10 +15,13 @@ public class CourseDTO {
 
     private List<Lesson> lessons = new ArrayList<>();
 
+    private Boolean enrolled;
+
     public CourseDTO(String identifier, String title, String teacher) {
         this.identifier = identifier;
         this.title = title;
         this.teacher = teacher;
+        this.enrolled = false;
     }
 
     public void setLessons(List<Lesson> lessons) {
@@ -39,5 +42,13 @@ public class CourseDTO {
 
     public List<Lesson> getLessons() {
         return lessons;
+    }
+
+    public Boolean getEnrolled() {
+        return enrolled;
+    }
+
+    public void setEnrolled(Boolean enrolled) {
+        this.enrolled = enrolled;
     }
 }
